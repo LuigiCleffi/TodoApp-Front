@@ -7,19 +7,41 @@ import Image from "next/image";
 import TodoCard from "@/components/TodoCard";
 import { useCallback, useState } from "react";
 
+
+interface TaskList {
+  taskVal: string;
+  isChecked: boolean;
+}
+
 export default function Home() {
 
   const [task, setTask] = useState<string>("")
-  const [tasks, setTasks] = useState<string[]>([]);
+  const [tasks, setTasks] = useState<TaskList[]>([]);
 
   const handleTaskValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask(e.target.value)
   }
 
   const handleAddTask = useCallback(() => {
-    setTasks(prevTasks => [...prevTasks, task]);
+    setTasks(prevTasks => [...prevTasks, { taskVal: task, isChecked: false }]);
     setTask("");
-  }, [task])
+  }, [task]);
+
+
+  const handleCheckInput = (index: number) => {
+    setTasks(prevTasks => {
+      const updatedTasks = [...prevTasks];
+      updatedTasks[index] = { ...updatedTasks[index], isChecked: !updatedTasks[index].isChecked };
+      return updatedTasks;
+    });
+  };
+  const handleRemoveTask = (index: number) => {
+    setTasks(prevTasks => {
+      const updatedTasks = [...prevTasks];
+      updatedTasks.splice(index, 1);
+      return updatedTasks;
+    });
+  };
 
   return (
     <main className="h-dvh bg-gray-600 relative">
@@ -30,12 +52,21 @@ export default function Home() {
       </section>
       <div className="w-full flex justify-center items-center gap-2 absolute top-70 transform -translate-y-1/2">
         <div className="w-6/12 flex justify-center items-center gap-2">
-          <TodoInput handleTaskValue={handleTaskValue} />
+          <TodoInput handleTaskValue={handleTaskValue} value={task} />
           <AddButton handleAddTask={handleAddTask} />
         </div>
       </div>
-      <TodoContainerWrapper amauntOfCreatedTasks={tasks.length} sx="w-6/12 mt-16 mx-auto" >
-        {tasks.length !== 0 ? tasks?.map((task, index) => <TodoCard isChecked key={index} task={task} />) : null}
+      <TodoContainerWrapper amountOfCreatedTasks={tasks.length} sx="w-6/12 mt-16 mx-auto" >
+        {tasks.length !== 0 ?
+          tasks?.map((task, index) =>
+            <TodoCard
+              key={index}
+              handleCheckInput={() => handleCheckInput(index)}
+              handleRemoveTask={() => handleRemoveTask(index)}
+              isChecked={task.isChecked}
+              task={task.taskVal}
+            />)
+          : null}
       </TodoContainerWrapper>
     </main >
   );

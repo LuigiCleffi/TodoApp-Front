@@ -1,29 +1,31 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 
+
 interface TodoContainerWrapperProps {
   children?: ReactNode,
-  amauntOfCreatedTasks?: number,
-  amauntOfTasksDone?: number,
+  amountOfCreatedTasks?: number,
+  amountOfTasksDone?: number,
   sx?: string
 }
 interface ContainerHeaderProps {
   title: string;
-  amauntOfTasks?: number,
+  amountOfTasks?: number,
+  totalAmountOfTasks?: number
 }
 
 const componentText = {
   tasksCreated: "Tarefas criadas",
-  tasksDone: "Concluídas"
+  tasksDone: "Concluídas",
 
 }
 
-const ContainerHeader = ({ amauntOfTasks, title }: ContainerHeaderProps) => {
+const ContainerHeader = ({ amountOfTasks, totalAmountOfTasks, title }: ContainerHeaderProps) => {
   return (
     <div className="flex items-center justify-center gap-2">
       <p className={title !== componentText.tasksCreated ? "text-purple-dark" : "text-blue"}>{title}</p>
-      <span className="w-6 h-6 rounded-full bg-gray-400 text-gray-200 flex items-center justify-center">
-        {amauntOfTasks}
+      <span className={`${title !== componentText.tasksDone ? 'w-8' : 'w-14'} p-1  rounded-full bg-gray-400 text-gray-200 flex items-center justify-center`}>
+        {title !== componentText.tasksCreated ? `${amountOfTasks} de ${totalAmountOfTasks}` : amountOfTasks}
       </span>
     </div >
 
@@ -33,8 +35,8 @@ const ContainerHeader = ({ amauntOfTasks, title }: ContainerHeaderProps) => {
 
 function TodoContainerWrapper({
   children,
-  amauntOfCreatedTasks = 0,
-  amauntOfTasksDone = 0,
+  amountOfCreatedTasks = 0,
+  amountOfTasksDone = 0,
   sx }: TodoContainerWrapperProps) {
   return (
     <div className={`justify-center  ${sx}`}>
@@ -42,15 +44,16 @@ function TodoContainerWrapper({
 
         <ContainerHeader
           title={componentText.tasksCreated}
-          amauntOfTasks={amauntOfCreatedTasks}
+          amountOfTasks={amountOfCreatedTasks}
         />
 
         <ContainerHeader
           title={componentText.tasksDone}
-          amauntOfTasks={amauntOfTasksDone}
+          amountOfTasks={amountOfTasksDone}
+          totalAmountOfTasks={amountOfCreatedTasks}
         />
       </div>
-      {!!children ? children : (
+      {children ?? (
         <section className="w-full flex flex-col items-center mt-6 border-t border-blue rounded-t-lg p-3">
           <div className="flex flex-col items-center mt-16">
             <Image src="/Clipboard.svg" width={80} height={80} alt="" />
