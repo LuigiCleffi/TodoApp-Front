@@ -1,9 +1,26 @@
+"use client";
 import AddButton from "@/components/Button/AddButton";
 import TodoContainerWrapper from "@/components/TodoContainerWrapper";
 import TodoInput from "@/components/TodoInput";
 import Image from "next/image";
 
+import TodoCard from "@/components/TodoCard";
+import { useCallback, useState } from "react";
+
 export default function Home() {
+
+  const [task, setTask] = useState<string>("")
+  const [tasks, setTasks] = useState<string[]>([]);
+
+  const handleTaskValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTask(e.target.value)
+  }
+
+  const handleAddTask = useCallback(() => {
+    setTasks(prevTasks => [...prevTasks, task]);
+    setTask("");
+  }, [task])
+
   return (
     <main className="h-dvh bg-gray-600 relative">
       <section className="bg-gray-700 h-[20%] flex justify-center items-center">
@@ -12,12 +29,14 @@ export default function Home() {
         </div>
       </section>
       <div className="w-full flex justify-center items-center gap-2 absolute top-70 transform -translate-y-1/2">
-        <div className="w-5/12 flex justify-center items-center gap-2">
-          <TodoInput />
-          <AddButton />
+        <div className="w-6/12 flex justify-center items-center gap-2">
+          <TodoInput handleTaskValue={handleTaskValue} />
+          <AddButton handleAddTask={handleAddTask} />
         </div>
       </div>
-      <TodoContainerWrapper sx="w-5/12 mt-10 mx-auto" />
-    </main>
+      <TodoContainerWrapper amauntOfCreatedTasks={tasks.length} sx="w-6/12 mt-16 mx-auto" >
+        {tasks.length !== 0 ? tasks?.map((task, index) => <TodoCard isChecked key={index} task={task} />) : null}
+      </TodoContainerWrapper>
+    </main >
   );
 }
