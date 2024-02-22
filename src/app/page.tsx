@@ -35,6 +35,7 @@ export default function Home() {
       return updatedTasks;
     });
   };
+
   const handleRemoveTask = (index: number) => {
     setTasks(prevTasks => {
       const updatedTasks = [...prevTasks];
@@ -49,7 +50,13 @@ export default function Home() {
     <main className="h-dvh bg-gray-600 relative">
       <section className="bg-gray-700 h-[20%] flex justify-center items-center">
         <div>
-          <Image src="/Logo.svg" alt="" width={200} height={200} />
+          <Image src="/Logo.svg" alt=""
+            width="0"
+            height="0"
+            sizes="100vw"
+            className="w-full h-[70px]"
+            priority
+          />
         </div>
       </section>
       <div className="w-full flex justify-center items-center gap-2 absolute top-70 transform -translate-y-1/2">
