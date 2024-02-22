@@ -35,6 +35,7 @@ export default function Home() {
       return updatedTasks;
     });
   };
+
   const handleRemoveTask = (index: number) => {
     setTasks(prevTasks => {
       const updatedTasks = [...prevTasks];
