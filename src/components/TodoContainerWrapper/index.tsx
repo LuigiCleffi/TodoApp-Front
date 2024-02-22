@@ -56,7 +56,7 @@ function TodoContainerWrapper({
       {children ?? (
         <section className="w-full flex flex-col items-center mt-6 border-t border-blue rounded-t-lg p-3">
           <div className="flex flex-col items-center mt-16">
-            <Image src="/Clipboard.svg" width={80} height={80} alt="" />
+            <Image src="/Clipboard.svg" width={80} height={80} alt="" priority />
             <div className="mt-4">
               <div className="text-center">
                 <p className="text-gray-300 font-bold text-lg ">
