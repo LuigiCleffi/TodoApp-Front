@@ -43,6 +43,8 @@ export default function Home() {
     });
   };
 
+  const amountOfTasksDone = tasks.filter(task => task.isChecked).length;
+
   return (
     <main className="h-dvh bg-gray-600 relative">
       <section className="bg-gray-700 h-[20%] flex justify-center items-center">
@@ -56,7 +58,7 @@ export default function Home() {
           <AddButton handleAddTask={handleAddTask} />
         </div>
       </div>
-      <TodoContainerWrapper amountOfCreatedTasks={tasks.length} sx="w-6/12 mt-16 mx-auto" >
+      <TodoContainerWrapper amountOfCreatedTasks={tasks.length} amountOfTasksDone={amountOfTasksDone} sx="w-6/12 mt-16 mx-auto" >
         {tasks.length !== 0 ?
           tasks?.map((task, index) =>
             <TodoCard
