@@ -11,8 +11,7 @@ interface TodoContainerWrapperProps {
 interface ContainerHeaderProps {
   title: string;
   amountOfTasks?: number,
-  totalAmountOfTasks?: number,
-  amountChecked?: number
+  totalAmountOfTasks?: number
 }
 
 const componentText = {
@@ -21,14 +20,15 @@ const componentText = {
 
 }
 
-const ContainerHeader = ({ amountOfTasks, amountChecked, totalAmountOfTasks, title }: ContainerHeaderProps) => {
+const ContainerHeader = ({ amountOfTasks, totalAmountOfTasks, title }: ContainerHeaderProps) => {
   return (
     <div className="flex items-center justify-center gap-2">
       <p className={title !== componentText.tasksCreated ? "text-purple-dark" : "text-blue"}>{title}</p>
       <span className={`${title !== componentText.tasksDone ? 'w-8' : 'w-14'} p-1  rounded-full bg-gray-400 text-gray-200 flex items-center justify-center`}>
-        {title !== componentText.tasksCreated ? `${amountChecked} de ${totalAmountOfTasks}` : amountOfTasks}
+        {title !== componentText.tasksCreated ? `${amountOfTasks} de ${totalAmountOfTasks}` : amountOfTasks}
       </span>
     </div >
+
   );
 
 }
@@ -51,7 +51,6 @@ function TodoContainerWrapper({
           title={componentText.tasksDone}
           amountOfTasks={amountOfTasksDone}
           totalAmountOfTasks={amountOfCreatedTasks}
-          amountChecked={amountOfTasksDone}
         />
       </div>
       {children ?? (
