@@ -60,12 +60,12 @@ export default function Home() {
         </div>
       </section>
       <div className="w-full flex justify-center items-center gap-2 absolute top-70 transform -translate-y-1/2">
-        <div className="w-6/12 flex justify-center items-center gap-2">
+        <div className="sm:w-64 md:w-6/12 flex justify-center items-center gap-2">
           <TodoInput handleTaskValue={handleTaskValue} value={task} />
           <AddButton handleAddTask={handleAddTask} />
         </div>
       </div>
-      <TodoContainerWrapper amountOfCreatedTasks={tasks.length} amountOfTasksDone={amountOfTasksDone} sx="w-6/12 mt-16 mx-auto" >
+      <TodoContainerWrapper amountOfCreatedTasks={tasks.length} amountOfTasksDone={amountOfTasksDone}  >
         {tasks.length !== 0 ?
           tasks?.map((task, index) =>
             <TodoCard
