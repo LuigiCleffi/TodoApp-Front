@@ -15,12 +15,8 @@ function TodoCard({ task, handleCheckInput, handleRemoveTask, isChecked }: { tas
         </Box>
         <Text size="3" weight="light" className={`text-gray-100 text-justify ${isChecked ? 'line-through' : undefined}`}>{task}</Text>
       </Flex>
-
       <TrashIcon className="w-8 h-7 text-gray-300 rounded-md hover:bg-gray-300 hover:text-danger p-1 cursor-pointer" onClick={handleRemoveTask} />
-
     </Flex>
-
-
   </div>);
 }
 
