@@ -6,7 +6,6 @@ interface TodoContainerWrapperProps {
   children?: ReactNode,
   amountOfCreatedTasks?: number,
   amountOfTasksDone?: number,
-  sx?: string
 }
 interface ContainerHeaderProps {
   title: string;
@@ -22,24 +21,24 @@ const componentText = {
 
 const ContainerHeader = ({ amountOfTasks, totalAmountOfTasks, title }: ContainerHeaderProps) => {
   return (
-    <div className="flex items-center justify-center gap-2">
+    <div className="flex flex-col items-center sm:flex-row sm:items-center justify-center sm:justify-between gap-2">
       <p className={title !== componentText.tasksCreated ? "text-purple-dark" : "text-blue"}>{title}</p>
-      <span className={`${title !== componentText.tasksDone ? 'w-8' : 'w-14'} p-1  rounded-full bg-gray-400 text-gray-200 flex items-center justify-center`}>
-        {title !== componentText.tasksCreated ? `${amountOfTasks} de ${totalAmountOfTasks}` : amountOfTasks}
-      </span>
-    </div >
-
+      <div className="text-gray-200 flex items-center">
+        <span className={`${title !== componentText.tasksDone ? 'w-8' : 'w-14'} p-1 rounded-full bg-gray-400 text-gray-200 flex items-center justify-center`}>
+          {title !== componentText.tasksCreated ? `${amountOfTasks} de ${totalAmountOfTasks}` : amountOfTasks}
+        </span>
+      </div>
+    </div>
   );
-
 }
 
 function TodoContainerWrapper({
   children,
   amountOfCreatedTasks = 0,
   amountOfTasksDone = 0,
-  sx }: TodoContainerWrapperProps) {
+}: TodoContainerWrapperProps) {
   return (
-    <div className={`justify-center  ${sx}`}>
+    <div className='justify-center w-6/12 mt-16 mx-auto'>
       <div className="w-full flex justify-between">
 
         <ContainerHeader
