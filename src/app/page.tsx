@@ -45,6 +45,7 @@ export default function Home() {
   };
 
   const amountOfTasksDone = tasks.filter(task => task.isChecked).length;
+  const checkIfTaskIsEmpty = task.length === 0;
 
   return (
     <main className="h-dvh bg-gray-600 relative">
@@ -62,7 +63,7 @@ export default function Home() {
       <div className="w-full flex justify-center items-center gap-2 absolute top-70 transform -translate-y-1/2">
         <div className="sm:w-64 md:w-6/12 flex justify-center items-center gap-2">
           <TodoInput handleTaskValue={handleTaskValue} value={task} />
-          <AddButton handleAddTask={handleAddTask} />
+          <AddButton handleAddTask={handleAddTask} hasTask={checkIfTaskIsEmpty} />
         </div>
       </div>
       <TodoContainerWrapper amountOfCreatedTasks={tasks.length} amountOfTasksDone={amountOfTasksDone}  >
