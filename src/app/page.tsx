@@ -7,8 +7,12 @@ import Image from "next/image";
 import TodoCard from "@/components/TodoCard";
 import { useCallback, useState } from "react";
 
+import { DndContext, DragEndEvent, MouseSensor, closestCenter, useSensor } from "@dnd-kit/core"
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
-interface TaskList {
+
+type TaskList = {
+  id: string;
   taskVal: string;
   isChecked: boolean;
 }
@@ -22,8 +26,18 @@ export default function Home() {
     setTask(e.target.value)
   }
 
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+
   const handleAddTask = useCallback(() => {
-    setTasks(prevTasks => [...prevTasks, { taskVal: task, isChecked: false }]);
+    setTasks(prevTasks => [...prevTasks, {
+      id: Math.random().toString(),
+      taskVal: task,
+      isChecked: false
+    }]);
     setTask("");
   }, [task]);
 
@@ -36,6 +50,7 @@ export default function Home() {
     });
   };
 
+
   const handleRemoveTask = (index: number) => {
     setTasks(prevTasks => {
       const updatedTasks = [...prevTasks];
@@ -43,6 +58,21 @@ export default function Home() {
       return updatedTasks;
     });
   };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (!over) return;
+
+    if (active.id !== over.id) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex(task => task.id === active.id);
+        const overIndex = tasks.findIndex(task => task.id === over.id);
+        return arrayMove(tasks, activeIndex, overIndex);
+      });
+    }
+
+  }
 
   const amountOfTasksDone = tasks.filter(task => task.isChecked).length;
   const checkIfTaskIsEmpty = task.length === 0;
@@ -67,16 +97,28 @@ export default function Home() {
         </div>
       </div>
       <TodoContainerWrapper amountOfCreatedTasks={tasks.length} amountOfTasksDone={amountOfTasksDone}  >
-        {tasks.length !== 0 ?
-          tasks?.map((task, index) =>
-            <TodoCard
-              key={index}
-              handleCheckInput={() => handleCheckInput(index)}
-              handleRemoveTask={() => handleRemoveTask(index)}
-              isChecked={task.isChecked}
-              task={task.taskVal}
-            />)
-          : null}
+        <DndContext
+          sensors={[mouseSensor]}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
+
+            {tasks.length !== 0 ?
+              tasks?.map((task, index) =>
+                <TodoCard
+                  id={task.id}
+                  key={index}
+                  handleCheckInput={() => handleCheckInput(index)}
+                  handleRemoveTask={() => handleRemoveTask(index)}
+                  isChecked={task.isChecked}
+                  task={task.taskVal}
+                />)
+              : null}
+          </SortableContext>
+
+        </DndContext>
+
       </TodoContainerWrapper>
     </main >
   );
