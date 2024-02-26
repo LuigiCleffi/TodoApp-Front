@@ -1,3 +1,4 @@
+import { Box } from "@radix-ui/themes";
 import Image from "next/image";
 import { ReactNode } from "react";
 
@@ -24,7 +25,7 @@ const ContainerHeader = ({ amountOfTasks, totalAmountOfTasks, title }: Container
     <div className="flex flex-col items-center sm:flex-row sm:items-center justify-center sm:justify-between gap-2">
       <p className={title !== componentText.tasksCreated ? "text-purple-dark" : "text-blue"}>{title}</p>
       <div className="text-gray-200 flex items-center">
-        <span className={`${title !== componentText.tasksDone ? 'w-8' : 'w-14'} p-1 rounded-full bg-gray-400 text-gray-200 flex items-center justify-center`}>
+        <span className={`${title !== componentText.tasksDone ? 'w-10' : 'w-28'} p-2 rounded-full bg-gray-400 text-gray-200 flex items-center justify-center`}>
           {title !== componentText.tasksCreated ? `${amountOfTasks} de ${totalAmountOfTasks}` : amountOfTasks}
         </span>
       </div>
@@ -38,7 +39,7 @@ function TodoContainerWrapper({
   amountOfTasksDone = 0,
 }: TodoContainerWrapperProps) {
   return (
-    <div className='justify-center w-6/12 mt-16 mx-auto'>
+    <div className='justify-center w-6/12 mt-16 mx-auto '>
       <div className="w-full flex justify-between">
 
         <ContainerHeader
@@ -52,7 +53,11 @@ function TodoContainerWrapper({
           totalAmountOfTasks={amountOfCreatedTasks}
         />
       </div>
-      {children ?? (
+      {amountOfCreatedTasks !== 0 ? (
+        <Box className="max-h-[60dvh] mt-6 overflow-y-auto custom-scrollbar pr-4">
+          {children}
+        </Box>
+      ) : (
         <section className="w-full flex flex-col items-center mt-6 border-t border-blue rounded-t-lg p-3">
           <div className="flex flex-col items-center mt-16">
             <Image src="/Clipboard.svg" width={80} height={80} alt="" priority />
