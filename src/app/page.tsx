@@ -96,7 +96,7 @@ export default function Home() {
           <AddButton handleAddTask={handleAddTask} hasTask={checkIfTaskIsEmpty} />
         </div>
       </div>
-      <TodoContainerWrapper amountOfCreatedTasks={tasks.length} amountOfTasksDone={amountOfTasksDone}  >
+      <TodoContainerWrapper amountOfCreatedTasks={tasks.length} amountOfTasksDone={amountOfTasksDone} >
         <DndContext
           sensors={[mouseSensor]}
           collisionDetection={closestCenter}

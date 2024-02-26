@@ -3,6 +3,37 @@
 @tailwind utilities;
 
 
-    input {
-      outline: none;
-    }
+input {
+  outline: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-button {
+  height: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #8D8DEA;
+  border-right: none;
+  border-left: none;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track-piece:start {
+    background: transparent;
+    margin-top: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track-piece:end {
+    background: transparent;
+    margin-top: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #5E60CE;
+}
